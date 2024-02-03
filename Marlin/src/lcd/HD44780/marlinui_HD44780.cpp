@@ -1508,8 +1508,8 @@ void MarlinUI::draw_status_screen() {
           new_char.custom_char_bits[j] = (uint8_t)_BV(i);                   // Char #3 is used for the box right edge
         lcd.createChar(CHAR_EDGE_R, (uint8_t*)&new_char);
 
-        i = x_plot * pixels_per_x_mesh_pnt - suppress_x_offset;
-        j = y_plot_inv * pixels_per_y_mesh_pnt - suppress_y_offset;
+        i = x_plot > 0 ? x_plot * pixels_per_x_mesh_pnt - suppress_x_offset : 0;
+        j = y_plot_inv >0 ? y_plot_inv * pixels_per_y_mesh_pnt - suppress_y_offset : 0;
         upper_left = pixel_location(i, j);
 
         k = (x_plot + 1) * pixels_per_x_mesh_pnt - 1 - suppress_x_offset;
@@ -1597,9 +1597,9 @@ void MarlinUI::draw_status_screen() {
        * Print plot position
        */
       lcd_put_lchar(_LCD_W_POS, 0, '(');
-      lcd_put_u8str(ui8tostr3rj(x_plot));
+      lcd_put_u8str(ui8tostr2rj(x_plot));
       lcd_put_u8str(F(","));
-      lcd_put_u8str(ui8tostr3rj(y_plot));
+      lcd_put_u8str(ui8tostr2rj(y_plot));
       lcd_put_u8str(F(")"));
 
       #if LCD_HEIGHT <= 3   // 16x2 or 20x2 display
